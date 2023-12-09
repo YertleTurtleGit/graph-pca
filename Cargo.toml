@@ -1,0 +1,22 @@
+[package]
+name = "graph_pca"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pyo3 = { version = "0.20.0", features = ["extension-module"] }
+nalgebra = "0.32.3"
+rayon = "1.8.0"
+kdtree = "0.7.0"
+petgraph = "0.6.4"
+
+[lib]
+name = "graph_pca"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+panic = "abort"
+strip = "symbols"

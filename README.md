@@ -1,13 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Graph PCA](#graph-pca)
-- [Examples](#examples)
-  - [Image](#image)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # Graph PCA
 
 Performs PCA with optional graph distance for neighborhood composition.
@@ -68,8 +58,8 @@ image = image.reshape((w * h, c + 2))
 
 
 ```python
-radius = 0.2
-max_edge_length = 0.1
+radius = 0.3
+max_edge_length = 0.15
 pca = graph_pca.calculate(image, radius, max_edge_length)
 ```
 

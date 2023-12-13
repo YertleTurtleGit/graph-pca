@@ -12,7 +12,7 @@ petgraph = "0.6.4"
 
 [lib]
 name = "graph_pca"
-path = "src/lib.rs"
+path = "src/python_lib.rs"
 crate-type = ["cdylib"]
 
 [profile.release]

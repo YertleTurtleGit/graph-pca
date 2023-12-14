@@ -2,6 +2,7 @@ use kdtree::{distance::squared_euclidean, KdTree};
 use nalgebra::{DMatrix, SymmetricEigen};
 use petgraph::algo::dijkstra;
 use petgraph::graph::{NodeIndex, UnGraph};
+use pyo3::prelude::*;
 use rayon::prelude::*;
 use std::vec::Vec;
 
@@ -126,23 +127,74 @@ fn get_pca(eigenvalues: &[f64]) -> Vec<f64> {
         .collect()
 }
 
-pub fn perform_pca(vectors: &Vec<Vec<f64>>, radius: f64, max_edge_length: f64) -> Vec<Vec<f64>> {
-    let kdtree = build_kdtree(vectors);
-    let feature_count = vectors[0].len();
+#[pyclass]
+#[derive(Clone, PartialEq)]
+pub enum Feature {
+    Eigenvalues,
+    PrincipalComponentValues,
+}
 
-    vectors
+pub fn calculate_features(
+    vectors: &Vec<Vec<f64>>,
+    features: &[Feature],
+    radius: f64,
+    max_edge_length: f64,
+) -> Vec<Vec<Vec<f64>>> {
+    let input_feature_count = vectors[0].len();
+    let output_feature_length = features.len();
+    let vector_length = vectors.len();
+
+    let mut vectors_per_feature =
+        vec![vec![vec![f64::NAN; input_feature_count]; vector_length]; output_feature_length];
+
+    if features.is_empty() {
+        return vectors_per_feature;
+    }
+
+    let kdtree = build_kdtree(vectors);
+
+    let eigenvalue_index = features
+        .iter()
+        .position(|feature| feature == &Feature::Eigenvalues);
+
+    let pca_index = features
+        .iter()
+        .position(|feature| feature == &Feature::PrincipalComponentValues);
+
+    let features_per_vector: Vec<Vec<Vec<f64>>> = vectors
         .par_iter()
         .map(|vector| {
+            let mut feature_vector = vec![vec![f64::NAN; vectors[0].len()]; features.len()];
+
             let neighborhood_vectors =
                 get_neighbor_vectors(&kdtree, vectors, vector, radius, max_edge_length);
 
             if neighborhood_vectors.len() <= 1 {
-                return vec![f64::NAN; feature_count];
+                return feature_vector;
             }
 
             let covariance_matrix = covariance_matrix(&neighborhood_vectors);
             let eigenvalues = get_eigenvalues(&covariance_matrix);
-            get_pca(&eigenvalues)
+
+            if let Some(feature_index) = pca_index {
+                feature_vector[feature_index] = get_pca(&eigenvalues);
+            }
+            if let Some(feature_index) = eigenvalue_index {
+                feature_vector[feature_index] = eigenvalues;
+            }
+
+            feature_vector
         })
-        .collect()
+        .collect();
+
+    for output_feature_index in 0..output_feature_length {
+        for vector_index in 0..vector_length {
+            for input_feature_index in 0..input_feature_count {
+                vectors_per_feature[output_feature_index][vector_index][input_feature_index] =
+                    features_per_vector[vector_index][output_feature_index][input_feature_index];
+            }
+        }
+    }
+
+    vectors_per_feature
 }

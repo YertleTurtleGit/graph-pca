@@ -9,17 +9,8 @@ Performs PCA with optional graph distance for neighborhood composition.
 
 (Still under heavy development.)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Examples](#examples)
-  - [Image](#image)
-    - [Eigenvalues](#eigenvalues)
-    - [Principal Component Analysis (PCA)](#principal-component-analysis-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
@@ -60,7 +51,7 @@ image_url = "http://thispersondoesnotexist.com/"
 image = np.asarray(bytearray(requests.get(image_url).content), dtype=np.uint8)
 image = cv.imdecode(image, cv.IMREAD_COLOR)
 image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-image = cv.resize(image, (128, 128))
+image = cv.resize(image, (256, 256))
 image = image.astype(np.float64) / 255
 
 _ = plt.imshow(image)
@@ -145,13 +136,9 @@ axes[1].set_title("Local Eigenvalue Sum")
 _ = axes[1].imshow(eigenvalue_sum_xy)
 ```
 
-    /tmp/ipykernel_2019/3500178925.py:3: RuntimeWarning: invalid value encountered in power
-      variance_xy = np.prod(eigenvalues_xy, axis=2) ** (1 / eigenvalues_xy.shape[2])
-
-
 
     
-![png](README_files/README_13_1.png)
+![png](README_files/README_13_0.png)
     
 
 

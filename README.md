@@ -9,16 +9,8 @@ Performs PCA with optional graph distance for neighborhood composition.
 
 (Still under heavy development.)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
@@ -31,8 +23,13 @@ if BUILD_BY_YOURSELF:
     !pip install maturin
     !maturin develop
 else:
+    !apt-get -qq install cargo
     !pip install -q git+https://github.com/YertleTurtleGit/graph-pca
 ```
+
+    E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+    E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+
 
 # Example
 

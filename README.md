@@ -9,17 +9,8 @@ Performs PCA with optional graph distance for neighborhood composition.
 
 (Still under heavy development.)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Examples](#examples)
-  - [Image](#image)
-    - [Eigenvalues](#eigenvalues)
-    - [Principal Component Analysis (PCA)](#principal-component-analysis-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
@@ -35,9 +26,7 @@ else:
     !pip install -q git+https://github.com/YertleTurtleGit/graph-pca
 ```
 
-# Examples
-
-## Image
+# Example
 
 
 ```python
@@ -46,9 +35,7 @@ else:
 
 
 ```python
-import requests
 import numpy as np
-import cv2 as cv
 from matplotlib import pyplot as plt
 import graph_pca
 from graph_pca import Feature
@@ -56,141 +43,101 @@ from graph_pca import Feature
 
 
 ```python
-image_url = "http://thispersondoesnotexist.com/"
-image = np.asarray(bytearray(requests.get(image_url).content), dtype=np.uint8)
-image = cv.imdecode(image, cv.IMREAD_COLOR)
-image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-image = cv.resize(image, (256, 256))
-image = image.astype(np.float64) / 255
+# generate test data
 
-_ = plt.imshow(image)
-```
-
-
-    
-![png](README_files/README_7_0.png)
-    
-
-
-
-```python
-h, w, c = image.shape
-
-radius = 0.25
-max_edge_length = (
-    radius  # this ignores graph distance, because max_edge_length >= radius
+fig, ax = plt.subplots(figsize=(20, 20))
+ax.set_facecolor("white")
+text = "YEAHU"
+ax.text(
+    0.5,
+    0.5,
+    text,
+    fontsize=50,
+    color="black",
+    ha="center",
+    va="center",
+    transform=ax.transAxes,
 )
 
-features = [Feature.Eigenvalues, Feature.PrincipalComponentValues]
-```
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_frame_on(False)
 
+fig.canvas.draw()
+image = np.array(fig.canvas.renderer.buffer_rgba())
+plt.close(fig)
 
-```python
-feature_count = c
-image_vectors = image.reshape((w * h, feature_count))
-
-eigenvalues, pca = graph_pca.calculate_features(
-    image_vectors, features, radius, max_edge_length
-)
-```
-
-
-```python
+h, w, _ = image.shape
 grid = np.array(np.meshgrid(np.linspace(0, 1, w), np.linspace(0, 1, h)))
-image_xy = np.dstack(
-    [image[:, :, 0], image[:, :, 1], image[:, :, 2], grid[0, :, :], grid[1, :, :]]
+points = np.dstack([grid[0, :, :], grid[1, :, :]])
+points = points[image[:, :, 0] == 0]
+points[:, 1] *= -1
+
+plt.gca().set_aspect("equal")
+_ = plt.scatter(points[:, 0], points[:, 1], s=3)
+```
+
+
+    
+![png](README_files/README_6_0.png)
+    
+
+
+
+```python
+radius = 0.02
+features = [Feature.Eigenvalues, Feature.PrincipalComponentValues]
+pca_count = points.shape[1]
+```
+
+## Classic PCA
+
+
+```python
+max_edge_length = (
+    radius  # This ignores graph neighborhood, because max_edge_length >= radius
 )
-
-feature_count_xy = c + 2
-image_vectors_xy = image_xy.reshape((w * h, feature_count_xy))
-
-eigenvalues_xy, pca_xy = graph_pca.calculate_features(
-    image_vectors_xy, features, radius, max_edge_length
+eigenvalues_xy_graph, pca_xy_graph = np.array(
+    graph_pca.calculate_features(points, features, radius, max_edge_length)
 )
 ```
 
-### Eigenvalues
-
 
 ```python
-eigenvalues = np.array(eigenvalues).reshape(h, w, feature_count)
-
-variance = np.prod(eigenvalues, axis=2) ** (1 / eigenvalues.shape[2])
-eigenvalue_sum = np.sum(eigenvalues, axis=2)
-
-figure, axes = plt.subplots(1, 2, figsize=(3 * 2, 3))
-axes[0].set_title("Variance")
-_ = axes[0].imshow(variance)
-axes[1].set_title("Eigenvalue Sum")
-_ = axes[1].imshow(eigenvalue_sum)
-```
-
-
-    
-![png](README_files/README_12_0.png)
-    
-
-
-
-```python
-eigenvalues_xy = np.array(eigenvalues_xy).reshape(h, w, feature_count_xy)
-
-variance_xy = np.prod(eigenvalues_xy, axis=2) ** (1 / eigenvalues_xy.shape[2])
-eigenvalue_sum_xy = np.sum(eigenvalues_xy, axis=2)
-
-figure, axes = plt.subplots(1, 2, figsize=(3 * 2, 3))
-axes[0].set_title("Local Variance")
-_ = axes[0].imshow(variance_xy)
-axes[1].set_title("Local Eigenvalue Sum")
-_ = axes[1].imshow(eigenvalue_sum_xy)
-```
-
-
-    
-![png](README_files/README_13_0.png)
-    
-
-
-### Principal Component Analysis (PCA)
-
-
-```python
-pca = np.array(pca)
-
-pca_list = []
-pca_count = feature_count
+figure, axes = plt.subplots(1, pca_count, figsize=(3.5 * pca_count, 1.5))
 for n in range(pca_count):
-    pca_list.append(np.clip(pca[:, n].reshape(h, w, 1), 0, 1))
-
-figure, axes = plt.subplots(1, pca_count, figsize=(3 * pca_count, 3))
-for n, pca_n in enumerate(pca_list):
-    _ = axes[n].imshow(pca_n)
+    _ = axes[n].scatter(points[:, 0], points[:, 1], c=pca_xy_graph[:, n], s=3)
+    axes[n].axis("equal")
     axes[n].set_title(f"PCA {n+1}")
 ```
 
 
     
-![png](README_files/README_15_0.png)
+![png](README_files/README_10_0.png)
     
 
 
+## Graph PCA
+
 
 ```python
-pca_xy = np.array(pca_xy)
+max_edge_length = 0.001
+eigenvalues_xy_graph, pca_xy_graph = np.array(
+    graph_pca.calculate_features(points, features, radius, max_edge_length)
+)
+```
 
-pca_list = []
-pca_count = feature_count_xy
+
+```python
+figure, axes = plt.subplots(1, pca_count, figsize=(3.5 * pca_count, 1.5))
 for n in range(pca_count):
-    pca_list.append(np.clip(pca_xy[:, n].reshape(h, w, 1), 0, 1))
-
-figure, axes = plt.subplots(1, pca_count, figsize=(3 * pca_count, 3))
-for n, pca_n in enumerate(pca_list):
-    _ = axes[n].imshow(pca_n)
-    axes[n].set_title(f"Local PCA {n+1}")
+    _ = axes[n].scatter(points[:, 0], points[:, 1], c=pca_xy_graph[:, n], s=3)
+    axes[n].axis("equal")
+    axes[n].set_title(f"Graph PCA {n+1}")
 ```
 
 
     
-![png](README_files/README_16_0.png)
+![png](README_files/README_13_0.png)
     
 

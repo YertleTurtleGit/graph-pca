@@ -10,16 +10,17 @@ fn graph_pca(_py: Python<'_>, module: &PyModule) -> PyResult<()> {
 }
 
 #[pyfunction]
+#[pyo3(signature = (vectors, features, radius, max_edge_length=None))]
 fn calculate_features(
     vectors: Vec<Vec<f64>>,
     features: Vec<Feature>,
     radius: f64,
-    max_edge_length: f64,
+    max_edge_length: Option<f64>,
 ) -> PyResult<Vec<Vec<Vec<f64>>>> {
     Ok(graph_pca_lib::calculate_features(
         &vectors,
         &features,
         radius,
-        max_edge_length,
+        max_edge_length.unwrap_or(radius),
     ))
 }

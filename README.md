@@ -9,16 +9,8 @@ Performs PCA with optional graph distance for neighborhood composition.
 
 (Still under heavy development.)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
@@ -107,11 +99,8 @@ pca_count = points.shape[1]
 
 
 ```python
-max_edge_length = (
-    radius  # This ignores graph neighborhood, because max_edge_length >= radius
-)
 eigenvalues_xy_graph, pca_xy_graph = np.array(
-    graph_pca.calculate_features(points, features, radius, max_edge_length)
+    graph_pca.calculate_features(points, features, radius)
 )
 ```
 

@@ -5,46 +5,44 @@
 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-Performs PCA with optional graph distance for neighborhood composition.
+Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-(Still under heavy development.)
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
+
 
 
 ```python
 BUILD_BY_YOURSELF = False
 
 if BUILD_BY_YOURSELF:
-    !pip install maturin
+    %pip install maturin
     !maturin develop
 else:
     !apt-get -qq install cargo
-    !pip install -q git+https://github.com/YertleTurtleGit/graph-pca
+    %pip install -q git+https://github.com/YertleTurtleGit/graph-pca
 ```
 
     E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
     E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
 
 
+    Note: you may need to restart the kernel to use updated packages.
+
+
 # Example
 
 
+
 ```python
-!pip install -q numpy opencv-python matplotlib requests
+%pip install -q numpy opencv-python matplotlib requests
 ```
+
+    Note: you may need to restart the kernel to use updated packages.
+
 
 
 ```python
@@ -100,10 +98,11 @@ _ = plt.scatter(points[:, 0], points[:, 1], s=3)
 ```python
 radius = 0.02
 features = [Feature.Eigenvalues, Feature.PrincipalComponentValues]
-pca_count = points.shape[1]
+pc_count = points.shape[1]
 ```
 
 ## Classic PCA
+
 
 
 ```python
@@ -114,11 +113,11 @@ eigenvalues_xy_graph, pca_xy_graph = np.array(
 
 
 ```python
-figure, axes = plt.subplots(1, pca_count, figsize=(3.5 * pca_count, 1.5))
-for n in range(pca_count):
+figure, axes = plt.subplots(1, pc_count, figsize=(3.5 * pc_count, 1.5))
+for n in range(pc_count):
     _ = axes[n].scatter(points[:, 0], points[:, 1], c=pca_xy_graph[:, n], s=3)
     axes[n].axis("equal")
-    axes[n].set_title(f"PCA {n+1}")
+    axes[n].set_title(f"PC {n+1}")
 ```
 
 
@@ -130,6 +129,7 @@ for n in range(pca_count):
 ## Graph PCA
 
 
+
 ```python
 max_edge_length = 0.001
 eigenvalues_xy_graph, pca_xy_graph = np.array(
@@ -139,11 +139,11 @@ eigenvalues_xy_graph, pca_xy_graph = np.array(
 
 
 ```python
-figure, axes = plt.subplots(1, pca_count, figsize=(3.5 * pca_count, 1.5))
-for n in range(pca_count):
+figure, axes = plt.subplots(1, pc_count, figsize=(3.5 * pc_count, 1.5))
+for n in range(pc_count):
     _ = axes[n].scatter(points[:, 0], points[:, 1], c=pca_xy_graph[:, n], s=3)
     axes[n].axis("equal")
-    axes[n].set_title(f"Graph PCA {n+1}")
+    axes[n].set_title(f"Graph PC {n+1}")
 ```
 
 

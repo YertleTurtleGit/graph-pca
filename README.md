@@ -7,8 +7,16 @@
 
 Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Installation](#installation)
+- [Example](#example)
+  - [Classic PCA](#classic-pca)
+  - [Graph PCA](#graph-pca)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 # Installation

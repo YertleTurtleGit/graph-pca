@@ -7,16 +7,8 @@
 
 Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
@@ -25,22 +17,146 @@ Performs Principal Component Analysis (PCA) with optional graph distance for nei
 
 ```python
 !apt-get -qq install cargo
-!git clone -q https://github.com/YertleTurtleGit/graph-pca
-%cd graph-pca
-%pip install -q .
+%pip install -q pathlib2
+import pathlib2 as pathlib
 
-# or directly: %pip install git+https://github.com/YertleTurtleGit/graph-pca
+DEV_MODE = pathlib.Path('.git').is_dir() and pathlib.Path.cwd().name == "graph-pca"
+
+if DEV_MODE:
+    #%pip install -q maturin
+    #!maturin develop
+    %pip install .
+else:
+    %pip install -q git+https://github.com/YertleTurtleGit/graph-pca
+
+
 ```
 
     E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
     E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
 
 
-    /home/runner/work/graph-pca/graph-pca/graph-pca
+    Note: you may need to restart the kernel to use updated packages.
 
 
-    /home/runner/.local/lib/python3.10/site-packages/IPython/core/magics/osm.py:417: UserWarning: This is now an optional IPython functionality, setting dhist requires you to install the `pickleshare` library.
-      self.shell.db['dhist'] = compress_dhist(dhist)[-100:]
+    Defaulting to user installation because normal site-packages is not writeable
+
+
+    Processing /home/runner/work/graph-pca/graph-pca
+
+
+      Installing build dependencies ... [?25l-
+
+     \
+
+     |
+
+     /
+
+     done
+
+
+    [?25h  Getting requirements to build wheel ... [?25ldone
+
+
+    [?25h  Preparing metadata (pyproject.toml) ... [?25l-
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     | done
+    [?25hBuilding wheels for collected packages: graph_pca
+
+
+      Building wheel for graph_pca (pyproject.toml) ... [?25l-
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     done
+    [?25h  Created wheel for graph_pca: filename=graph_pca-0.2.0-cp310-cp310-linux_x86_64.whl size=256194 sha256=b3f6edf8d07df9a74b2a991d4b44e687827b4b5feddaaef7259143de4869a696
+      Stored in directory: /home/runner/.cache/pip/wheels/7b/c4/c0/8f5feb247149d5b104495eb30718e47a9918e3e64bbd443a56
+    Successfully built graph_pca
+
+
+    Installing collected packages: graph_pca
+    Successfully installed graph_pca-0.2.0
 
 
     Note: you may need to restart the kernel to use updated packages.

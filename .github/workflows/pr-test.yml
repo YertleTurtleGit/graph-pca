@@ -1,7 +1,7 @@
 name: Generate README
 
 on:
-  pull-request
+  pull-request:
 
 jobs:
   generate_readme:

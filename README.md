@@ -7,16 +7,8 @@
 
 Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Installation
@@ -24,18 +16,23 @@ Performs Principal Component Analysis (PCA) with optional graph distance for nei
 
 
 ```python
-BUILD_BY_YOURSELF = False
+!apt-get -qq install cargo
+!git clone -q https://github.com/YertleTurtleGit/graph-pca
+%cd graph-pca
+%pip install -q .
 
-if BUILD_BY_YOURSELF:
-    %pip install maturin
-    !maturin develop
-else:
-    !apt-get -qq install cargo
-    %pip install -q git+https://github.com/YertleTurtleGit/graph-pca
+# or directly: %pip install git+https://github.com/YertleTurtleGit/graph-pca
 ```
 
     E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
     E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+
+
+    /home/runner/work/graph-pca/graph-pca/graph-pca
+
+
+    /home/runner/.local/lib/python3.10/site-packages/IPython/core/magics/osm.py:417: UserWarning: This is now an optional IPython functionality, setting dhist requires you to install the `pickleshare` library.
+      self.shell.db['dhist'] = compress_dhist(dhist)[-100:]
 
 
     Note: you may need to restart the kernel to use updated packages.

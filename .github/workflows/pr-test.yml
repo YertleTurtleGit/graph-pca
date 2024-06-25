@@ -1,8 +1,7 @@
 name: Generate README
 
 on:
-  push:
-    branches: [main]
+  pull-request
 
 jobs:
   generate_readme:
@@ -27,30 +26,7 @@ jobs:
           jupyter nbconvert --clear-output --inplace *.ipynb
           black_nbconvert .
 
-      - name: Commit cleared and formatted jupyter notebook
-        run: |
-          git add *.ipynb
-          git commit -m "format and clear jupyter notebook output" || echo "No changes to commit"
-
       - name: Convert README ipynb to md
         run: |
           rm -rf README_files
           jupyter nbconvert --to markdown --execute README.ipynb
-
-      - name: Commit README
-        run: |
-          git add README.md README_files
-          git commit -m "update readme files" || echo "No changes to commit"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ github.token }}
-          branch: main
-
-  generate_readme_toc:
-    needs: generate_readme
-    name: Generate TOC
-    runs-on: ubuntu-latest
-    steps:
-      - uses: technote-space/toc-generator@v4

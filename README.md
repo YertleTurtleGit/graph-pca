@@ -7,17 +7,41 @@
 
 Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
+<!-- START doctoc -->
+<!-- END doctoc -->
 
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+# Geodesic Graph Distance
 
+## Why?
+'Classic' (Euclidean distance) neighborhood search in point clouds has some downsides when it comes to structures that are thin in one dimension and close in proximity to the neighborhood radius (e.g., small twigs in a lidar scan of a tree). When computing geometric features using such a classic neighborhood approach, it is possible for adjacent twigs to interfere with each other in a way that the geometric features do not accurately represent an individual twig.
+
+## What?
+The method to prevent that was well visualized here:
+![](https://github.com/jakarto3d/jakteristics/assets/34098804/1d9b8696-4751-4dfc-b672-cf7c4153cf81)
+*Fig. 4 from the paper: Jiang, Anling, et al. "Skeleton extraction from point clouds of trees with complex branches via graph contraction." The Visual Computer 37 (2021): 2235-2251.*
+
+and is also implemented in PyVista for single paths and meshes:
+![](https://github.com/jakarto3d/jakteristics/assets/34098804/7b66c4bd-0d18-439f-978e-53bc399f08ac)
+*Image from: https://docs.pyvista.org/version/stable/examples/01-filter/geodesic.html*
+
+It will compute the classic neighborhood and filter out any points that cannot be reached with edges, where each individual edge must be smaller or equal to max_graph_edge_length, and the cumulative sum of the edges must be smaller or equal to search_radius.
+
+## Results
+
+`max_edge_length=0.5` (both)
+`max_edge_length=0.1` (only for Geodesic distance)
+
+| Feature   |      'Classic' (only Euclidean distance)      |  Geodesic distance |
+|-------------|:-------------:|:-------------:|
+| Neighborhood size | ![number_of_neighbors](https://github.com/jakarto3d/jakteristics/assets/34098804/2353c589-c27a-48c2-89b0-a250b5f508a5) | ![number_of_neighbors_geodesic](https://github.com/jakarto3d/jakteristics/assets/34098804/e59db802-54db-4010-bb58-41c51a8f70a6) |
+| Eigenvalue 1 | ![eigenvalue](https://github.com/jakarto3d/jakteristics/assets/34098804/dc5a9ef5-b1ae-44bc-984d-7a7330f63b46) | ![eigenvalue1_geodesic](https://github.com/jakarto3d/jakteristics/assets/34098804/d78d3810-5b2c-413f-bddd-130e38f5f5ad) |
+| PC2 | ![pc2](https://github.com/jakarto3d/jakteristics/assets/34098804/56081abe-5221-4e70-8815-29bc2dea856f) | ![pc2_geodesic](https://github.com/jakarto3d/jakteristics/assets/34098804/d63d074b-8f70-4bd4-969c-e46e5a064245) |
+
+## Why not?
+- it's slow
+- it requires more RAM
+- you have to decide on two parameters instead of one :smile: 
 
 # Installation
 
@@ -79,10 +103,10 @@ else:
 
      \
 
-     | done
+     |
+
+     done
     [?25hBuilding wheels for collected packages: graph_pca
-
-
       Building wheel for graph_pca (pyproject.toml) ... [?25l-
 
      \
@@ -153,17 +177,15 @@ else:
 
      |
 
-     /
-
-     -
-
      done
-    [?25h  Created wheel for graph_pca: filename=graph_pca-0.2.0-cp310-cp310-linux_x86_64.whl size=256194 sha256=b3f6edf8d07df9a74b2a991d4b44e687827b4b5feddaaef7259143de4869a696
+    [?25h  Created wheel for graph_pca: filename=graph_pca-0.2.0-cp310-cp310-linux_x86_64.whl size=261599 sha256=6a112c2f78ff62505fb3563d8fa18fbe86be43903dd7ae1f3887a96ee323fc0a
       Stored in directory: /home/runner/.cache/pip/wheels/7b/c4/c0/8f5feb247149d5b104495eb30718e47a9918e3e64bbd443a56
     Successfully built graph_pca
 
 
     Installing collected packages: graph_pca
+
+
     Successfully installed graph_pca-0.2.0
 
 
@@ -227,7 +249,7 @@ _ = plt.scatter(points[:, 0], points[:, 1], s=3)
 
 
     
-![png](README_files/README_6_0.png)
+![png](README_files/README_7_0.png)
     
 
 
@@ -259,7 +281,7 @@ for n in range(pc_count):
 
 
     
-![png](README_files/README_10_0.png)
+![png](README_files/README_11_0.png)
     
 
 
@@ -285,6 +307,6 @@ for n in range(pc_count):
 
 
     
-![png](README_files/README_13_0.png)
+![png](README_files/README_14_0.png)
     
 

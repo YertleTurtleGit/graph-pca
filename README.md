@@ -7,21 +7,8 @@
 
 Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Geodesic Graph Distance](#geodesic-graph-distance)
-  - [Why?](#why)
-  - [What?](#what)
-  - [Results](#results)
-  - [Why not?](#why-not)
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Geodesic Graph Distance
@@ -87,7 +74,7 @@ else:
     Defaulting to user installation because normal site-packages is not writeable
 
 
-    Processing /home/runner/work/graph-pca/graph-pca
+    Processing ./.
 
 
       Installing build dependencies ... [?25l-
@@ -95,8 +82,6 @@ else:
      \
 
      |
-
-     /
 
      done
 
@@ -114,12 +99,10 @@ else:
 
      -
 
-     \
-
-     |
-
-     done
+     \ done
     [?25hBuilding wheels for collected packages: graph_pca
+
+
       Building wheel for graph_pca (pyproject.toml) ... [?25l-
 
      \
@@ -190,15 +173,15 @@ else:
 
      |
 
+     /
+
      done
-    [?25h  Created wheel for graph_pca: filename=graph_pca-0.2.0-cp310-cp310-linux_x86_64.whl size=261599 sha256=6a112c2f78ff62505fb3563d8fa18fbe86be43903dd7ae1f3887a96ee323fc0a
-      Stored in directory: /home/runner/.cache/pip/wheels/7b/c4/c0/8f5feb247149d5b104495eb30718e47a9918e3e64bbd443a56
+    [?25h  Created wheel for graph_pca: filename=graph_pca-0.2.0-cp312-cp312-linux_x86_64.whl size=254570 sha256=2eee24bc137327bbfcd6e07c9b939904ea817189af3f516a0004a39b3814144e
+      Stored in directory: /home/runner/.cache/pip/wheels/27/e7/b7/4ca70840b4dc1f90c760846748dadfba48b39c4259436dd2cd
     Successfully built graph_pca
 
 
     Installing collected packages: graph_pca
-
-
     Successfully installed graph_pca-0.2.0
 
 

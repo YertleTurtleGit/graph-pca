@@ -18,6 +18,7 @@ jobs:
           pip install nbconvert
           pip install black_nbconvert
           pip install markupsafe==2.0.1
+          pip3 install toml
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

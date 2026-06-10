@@ -4,7 +4,7 @@ version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-pyo3 = { version = "0.21.1", features = ["extension-module"] }
+pyo3 = { version = "0.24.1", features = ["extension-module"] }
 nalgebra = "0.32.3"
 rayon = "1.8.0"
 kdtree = "0.7.0"

@@ -1,5 +1,7 @@
 use kdtree::{distance::squared_euclidean, KdTree};
 use nalgebra::{DMatrix, SymmetricEigen};
+use petgraph::algo::dijkstra;
+use petgraph::graph::{NodeIndex, UnGraph};
 use pyo3::prelude::*;
 use rayon::prelude::*;
 use std::vec::Vec;

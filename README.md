@@ -7,21 +7,8 @@
 
 Performs Principal Component Analysis (PCA) with optional graph distance for neighborhood composition.
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Geodesic Graph Distance](#geodesic-graph-distance)
-  - [Why?](#why)
-  - [What?](#what)
-  - [Results](#results)
-  - [Why not?](#why-not)
-- [Installation](#installation)
-- [Example](#example)
-  - [Classic PCA](#classic-pca)
-  - [Graph PCA](#graph-pca)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 
 # Geodesic Graph Distance
@@ -85,8 +72,6 @@ else:
 
 
     Defaulting to user installation because normal site-packages is not writeable
-
-
     Processing ./.
 
 
@@ -112,7 +97,13 @@ else:
 
      -
 
-     \ done
+     \
+
+     |
+
+     /
+
+     done
     [?25hBuilding wheels for collected packages: graph_pca
 
 
@@ -188,14 +179,40 @@ else:
 
      /
 
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
+     \
+
+     |
+
+     /
+
+     -
+
      done
-    [?25h  Created wheel for graph_pca: filename=graph_pca-0.2.0-cp312-cp312-linux_x86_64.whl size=254570 sha256=2eee24bc137327bbfcd6e07c9b939904ea817189af3f516a0004a39b3814144e
+    [?25h  Created wheel for graph_pca: filename=graph_pca-0.3.0-cp312-cp312-linux_x86_64.whl size=254732 sha256=4d9c9c1b967e2d884e11dc51d926e84bb62ec3a9c91745827b5daa8ccd639f8f
       Stored in directory: /home/runner/.cache/pip/wheels/27/e7/b7/4ca70840b4dc1f90c760846748dadfba48b39c4259436dd2cd
     Successfully built graph_pca
 
 
     Installing collected packages: graph_pca
-    Successfully installed graph_pca-0.2.0
+    Successfully installed graph_pca-0.3.0
 
 
     Note: you may need to restart the kernel to use updated packages.

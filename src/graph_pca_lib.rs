@@ -127,7 +127,7 @@ fn get_pca(eigenvalues: &[f64]) -> Vec<f64> {
         .collect()
 }
 
-#[pyclass]
+#[pyclass(from_py_object)]
 #[derive(Clone, PartialEq)]
 pub enum Feature {
     Eigenvalues,
@@ -198,3 +198,4 @@ pub fn calculate_features(
 
     vectors_per_feature
 }
+

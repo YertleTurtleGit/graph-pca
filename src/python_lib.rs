@@ -3,7 +3,7 @@ use pyo3::prelude::*;
 mod graph_pca_lib;
 
 #[pymodule]
-fn graph_pca(_py: Python<'_>, module: &PyModule) -> PyResult<()> {
+fn graph_pca(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(calculate_features, module)?)?;
     module.add_class::<Feature>()?;
     Ok(())
